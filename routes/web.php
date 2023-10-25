@@ -1,6 +1,8 @@
 <?php
 
+use App\Helper\Helper;
 use App\Http\Controllers\LinkController;
+use App\Models\LinkClick;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +20,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/acc', function () {
-    return view('welcome');
+    $click = LinkClick::all();
+    return $click;
 });
 
 Auth::routes();

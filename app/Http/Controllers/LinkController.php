@@ -126,12 +126,12 @@ class LinkController extends Controller
         $link = Link::where('uuid', $uuid)->firstOrFail();
 
         if (!is_null($link)) {
-            $country = '';
+            $country = null;
             $ip = $request->ip();
             $ipv6 = $request->header('x-forwarded-for');
 
-            if ($ipv6 != '') {
-                $country = Helper::getCountryFromIP($ipv6);
+            if ($ip != '') {
+                $country = Helper::getCountryFromIP($ip);
             }
 
             $count = LinkClick::create([
