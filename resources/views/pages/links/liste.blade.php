@@ -27,7 +27,7 @@
                     <h2 class="font-bold text-md leading-7 text-gray-900 sm:truncate sm:tracking-tight">
                         {{ $l->title ?? 'Untitled ' . $l->created_at }}</h2>
                     <span class="block">
-                        <a href="{{ $l->short.'fbd' }}" class="mt-2 inline-flex text-sm" target="_blank">
+                        <a href="{{ $l->short }}" class="mt-2 inline-flex text-sm" target="_blank">
                             <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
                                 aria-hidden="true">
                                 <path
