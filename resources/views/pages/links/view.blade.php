@@ -77,51 +77,67 @@
 @endsection
 
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <div class="space-y-10">
 
         <div class="sm:flex sm:justify-between bg-white shadow-lg p-4 m-3">
-            @if (count($l->clicked) > 0)                
-           <table class="table">
-            <thead>
-                <th>
-                    <td>#</td>
-                    <td>Date</td>
-                    <td>Pays</td>
-                </th>
-            </thead>
-            <tbody>
-                @foreach ($l->clicked as $elt)
-                <tr>
-                    <td>{{ $loop }} </td>
-                    <td>{{ $elt->created_at }}</td>
-                    <td>{{ $elt->country }}</td>
-                </tr>
-                @endforeach
-                
-            </tbody>
-           </table>
+            @if (count($l->clicked) > 0)
+                <table class="table">
+                    <thead>
+                        <th>
+                        <td>#</td>
+                        <td>Date</td>
+                        <td>Pays</td>
+                        </th>
+                    </thead>
+                    <tbody>
+                        @foreach ($l->clicked as $elt)
+                            <tr>
+                                <td>{{ $loop->iteration }} </td>
+                                <td>{{ $elt->created_at }}</td>
+                                <td>{{ $elt->country }}</td>
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
             @endif
+
+            <h3>Nombre de clics par pays</h3>
+            <canvas id="clicksChart"></canvas>
+
+            <script>
+                // Compter les clics par pays dans la vue
+                const clicksData = @json($l->clicked->groupBy('country')->map->count());
+
+                // Récupérer les pays et les clics pour le graphique
+                const countries = Object.keys(clicksData);
+                const clicks = Object.values(clicksData);
+
+                // Configuration et affichage du graphique
+                const ctx = document.getElementById('clicksChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: countries,
+                        datasets: [{
+                            label: 'Nombre de clics',
+                            data: clicks,
+                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
         </div>
     </div>
-
-    <script>
-        function copyToClipboard(text) {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text)
-                    .then(() => alert("Texte copié dans le presse-papier !"))
-                    .catch(err => console.error("Erreur lors de la copie : ", err));
-            } else {
-                // Fallback pour les anciens navigateurs
-                const tempInput = document.createElement("input");
-                tempInput.style.position = "fixed";
-                tempInput.style.opacity = "0";
-                tempInput.value = text;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand("copy");
-                document.body.removeChild(tempInput);
-                alert("Texte copié dans le presse-papier !");
-            }
-        }
-    </script>
 @endsection

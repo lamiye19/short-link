@@ -97,25 +97,4 @@
             </div>
         @endforeach
     </div>
-
-    <script>
-        function copyToClipboard(text) {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text)
-                    .then(() => alert("Texte copié dans le presse-papier !"))
-                    .catch(err => console.error("Erreur lors de la copie : ", err));
-            } else {
-                // Fallback pour les anciens navigateurs
-                const tempInput = document.createElement("input");
-                tempInput.style.position = "fixed";
-                tempInput.style.opacity = "0";
-                tempInput.value = text;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand("copy");
-                document.body.removeChild(tempInput);
-                alert("Texte copié dans le presse-papier !");
-            }
-        }
-    </script>
 @endsection
