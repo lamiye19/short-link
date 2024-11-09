@@ -112,8 +112,10 @@
         </div>
         
         <script>
-            const countries = {!! json_encode($clicksByCountry->keys()) !!};
-            const clicks = {!! json_encode($clicksByCountry->values()) !!};
+            const clicksData = @json($l->clicked->groupBy('country')->map->count());
+    
+            const countries = Object.keys(clicksData);
+            const clicks = Object.values(clicksData);
     
             const ctx = document.getElementById('clicksChart').getContext('2d');
             new Chart(ctx, {
