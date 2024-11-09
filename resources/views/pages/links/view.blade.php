@@ -112,12 +112,9 @@
         </div>
         
         <script>
-            // Compter les clics par pays dans la vue
-            const clicksData = @json($l->clicked->groupBy('country')->map->count());
-        
-            const countries = Object.keys(clicksData);
-            const clicks = Object.values(clicksData);
-        
+            const countries = {!! json_encode($clicksByCountry->keys()) !!};
+            const clicks = {!! json_encode($clicksByCountry->values()) !!};
+    
             const ctx = document.getElementById('clicksChart').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
@@ -132,8 +129,6 @@
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false, // Respecte la hauteur fixe définie sur le canvas
                     scales: {
                         y: {
                             beginAtZero: true
