@@ -55,6 +55,15 @@
                                                     'autocomplete' => 'uuid',
                                                 ])
                                             </div>
+                                            @include('components.input', [
+                                                'id' => 'long',
+                                                'label' => 'Destination',
+                                                'type' => 'link',
+                                                'value' => $l->long,
+                                                'controls' => '',
+                                                'value' => $l->title,
+                                                'autocomplete' => 'long',
+                                            ])
                                         </div>
                                     </div>
 

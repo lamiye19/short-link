@@ -61,7 +61,7 @@ class Helper
 
   public static function getCountryFromIP($ip)
   {
-    $reader = new Reader(env('GEOIP_DATABASE_PATH'));
+    $reader = new Reader(base_path(env('GEOIP_DATABASE_PATH')));
 
     try {
       $record = $reader->city($ip);

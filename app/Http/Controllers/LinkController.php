@@ -116,6 +116,22 @@ class LinkController extends Controller
         return redirect()->route('links')->with(['success' => "Short link updated."]);
     }
 
+    public function view(Request $request, $uuid)
+    {
+        $link = Link::where('uuid', $uuid)->first();
+
+        if (is_null($link)) {
+            return redirect()->route('links')->with(['error' => "Short link not found."]);
+        }
+
+        if ($link->user_id != auth()->user()->id) {
+            return redirect()->route('links')->with(['error' => "You cannot view other's link."]);
+        }
+
+
+        return view('pages.links.view', ['l' => $link]);
+    }
+
     public function create()
     {
         return view('pages.links.create');

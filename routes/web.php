@@ -33,6 +33,7 @@ Route::middleware("auth")->name('')->group( function(){
     Route::get('/create',  'create')->name('.create');
     Route::post('/store',  'store')->name('.store');
     Route::post('/update/{uuid}',  'update')->name('.update');
+    Route::get('/view/{uuid}',  'view')->name('.view');
 });
 });
 Route::get('/{uuid}', [LinkController::class, 'get_link'])->name('short');

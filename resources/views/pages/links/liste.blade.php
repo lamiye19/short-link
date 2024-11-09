@@ -67,18 +67,9 @@
 
                 <div class="mt-5 flex md:ml-4 md:mt-0">
                     <span class="w-3/4 sm:block">
-                        <button type="button"
+                        <button type="button" onclick="copyToClipboard({{ json_encode($l->short) }})"
                             class="w-full inline-flex items-center rounded-md bg-gray-300 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                            <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" stroke="currentColor" fill="currentColor"
-                                stroke-width="0" viewBox="0 0 24 24" role="graphics-document" height="1em" width="1em"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <title>copy</title>
-                                <path fill="none" d="M0 0h24v24H0z"></path>
-                                <path
-                                    d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z">
-                                </path>
-                            </svg>
-
+                            <i class="bx bxs-copy fs-2 bx-rotate-270 -ml-0.5 mr-1.5 h-5 w-5 text-gray-400"></i>
                             Copy
                         </button>
                     </span>
@@ -86,49 +77,45 @@
                     <span class="ml-3 sm:block">
                         <button type="button" id="openEdit{{ $l->id }}"
                             class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-
-                            <svg class="-ml-0.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
-                                aria-hidden="true">
-                                <path
-                                    d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
-                            </svg>
+                            <i class="bx bx-edit-alt my-1"></i>
+                            
                         </button>
                         @include('pages.links.edit')
                     </span>
 
-
-
                     <!-- Dropdown -->
                     <div class="relative ml-3">
-                        <span class="sm:ml-3">
+                        <a class="sm:ml-3" href="{{ route('links.view', ['uuid' => $l->uuid]) }}">
                             <button type="button"
                                 class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400"
                                 id="mobile-menu-button" aria-expanded="false" aria-haspopup="false">
-                                ...
+                                <i class="bx bx-show my-1"></i>
                             </button>
-                        </span>
-
-                        <!--
-                          Dropdown menu, show/hide based on menu state.
-                  
-                          Entering: "transition ease-out duration-200"
-                            From: "transform opacity-0 scale-95"
-                            To: "transform opacity-100 scale-100"
-                          Leaving: "transition ease-in duration-75"
-                            From: "transform opacity-100 scale-100"
-                            To: "transform opacity-0 scale-95"
-                        -->
-                        <div class="hidden absolute right-0 z-10 -mr-1 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                            role="menu" aria-orientation="vertical" aria-labelledby="mobile-menu-button" tabindex="-1">
-                            <!-- Active: "bg-gray-100", Not Active: "" -->
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                id="mobile-menu-item-0">Edit</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                id="mobile-menu-item-1">View</a>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
+
+    <script>
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text)
+                    .then(() => alert("Texte copié dans le presse-papier !"))
+                    .catch(err => console.error("Erreur lors de la copie : ", err));
+            } else {
+                // Fallback pour les anciens navigateurs
+                const tempInput = document.createElement("input");
+                tempInput.style.position = "fixed";
+                tempInput.style.opacity = "0";
+                tempInput.value = text;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+                alert("Texte copié dans le presse-papier !");
+            }
+        }
+    </script>
 @endsection
