@@ -84,7 +84,7 @@
             @if (count($l->clicked) > 0)
                 <!-- Section du tableau -->
                 <div class="sm:w-1/2 p-2">
-                    <table class="table w-full">
+                    <table class="table table-border">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -105,10 +105,9 @@
                 </div>
             @endif
         
-            <!-- Section du graphique -->
             <div class="sm:w-1/2 p-2">
                 <h3>Nombre de clics par pays</h3>
-                <canvas id="clicksChart"></canvas>
+                <canvas id="clicksChart" style="height: 400px; width: 100%;"></canvas>
             </div>
         </div>
         
@@ -116,11 +115,9 @@
             // Compter les clics par pays dans la vue
             const clicksData = @json($l->clicked->groupBy('country')->map->count());
         
-            // Récupérer les pays et les clics pour le graphique
             const countries = Object.keys(clicksData);
             const clicks = Object.values(clicksData);
         
-            // Configuration et affichage du graphique
             const ctx = document.getElementById('clicksChart').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
@@ -136,7 +133,7 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
+                    maintainAspectRatio: false, // Respecte la hauteur fixe définie sur le canvas
                     scales: {
                         y: {
                             beginAtZero: true
