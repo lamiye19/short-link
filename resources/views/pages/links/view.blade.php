@@ -82,41 +82,56 @@
     <div class="space-y-10">
         <div class="sm:flex sm:justify-between bg-white shadow-lg p-4 m-3">
             @if (count($l->clicked) > 0)
-                <!-- Section du tableau -->
                 <div class="sm:w-1/2 p-2">
-                    <table class="table table-border">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Date</th>
-                                <th>Pays</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($l->clicked as $elt)
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $elt->created_at }}</td>
-                                    <td>{{ $elt->country }}</td>
+                                    <th scope="col" class="px-6 py-3">
+                                        #
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Date
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Pays
+                                    </th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($l->clicked as $elt)
+                                    <tr
+                                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $loop->iteration }}
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            {{ $elt->created_at }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $elt->country }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             @endif
-        
+
             <div class="sm:w-1/2 p-2">
                 <h3>Nombre de clics par pays</h3>
-                <canvas id="clicksChart" style="height: 400px; width: 100%;"></canvas>
+                <canvas id="clicksChart" style="height: 300px; width: 100%;"></canvas>
             </div>
         </div>
-        
+
         <script>
             const clicksData = @json($l->clicked->groupBy('country')->map->count());
-    
+
             const countries = Object.keys(clicksData);
             const clicks = Object.values(clicksData);
-    
+
             const ctx = document.getElementById('clicksChart').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
@@ -139,6 +154,6 @@
                 }
             });
         </script>
-        
+
     </div>
 @endsection
