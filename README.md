@@ -28,18 +28,16 @@ Assurez-vous d'avoir installé :
    ```bash
    git clone https://github.com/lamiye19/short-link.git
    cd short-link
-
 2. Installez les dépendances
    ```bash
    composer install
-  
 3. Configuration de l'environnement
-
 Créez un fichier .env à partir de l'exemple fourni :
-    ```bash
-    cp .env.example .env
 
+    ```
+    cp .env.example .env
 * Configurez les informations de connexion à la base de données dans .env:
+
     ```bash
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
@@ -47,22 +45,18 @@ Créez un fichier .env à partir de l'exemple fourni :
     DB_DATABASE=shortlink
     DB_USERNAME=your_username
     DB_PASSWORD=
-
 4. Générez la clé de l'application :
 
     ```bash
     php artisan key:generate
-
 5. Migrations:
 
     ```bash
     php artisan migrate
-
 6. Démarrez le serveur :
     ```bash
     php artisan serve
-
-Accédez à l'application via ```http://127.0.0.1:8000 .
+Accédez à l'application via http://127.0.0.1:8000.
 
 ## Contributions
 Les contributions sont les bienvenues ! Veuillez soumettre une pull request pour discuter des modifications que vous souhaitez apporter.
