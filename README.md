@@ -25,10 +25,12 @@ Assurez-vous d'avoir installé :
 
 1. Clonez le dépôt :
   
+   ```bash
    git clone [https://github.com/lamiye19/short-link.git](https://github.com/lamiye19/short-link.git)  
-   cd short-link
+   cd short-link```
+
 2. Installez les dépendances :
-   `bash
+   ```bash
    composer install
   
 
